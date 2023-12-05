@@ -23,23 +23,30 @@
       .container {
         width: 250px;
         height: 300px;
-        background-color: antiquewhite;
+        /* background-color: antiquewhite; */
+        background-color: blueviolet;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        box-shadow: 4px 4px 4px 3px black;
+        /* padding: 4px; */
+        /* border-radius: 19px; */
       }
 
       .display {
+        align-self: self-start;
         background-color: blueviolet;
         flex: 0 0 auto;
         height: 25%;
-        width: 100%;
-        direction: rtl;
+        width: 99%;
         font-size: 26px;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        align-items: end;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
       }
 
       .buttons {
@@ -52,7 +59,6 @@
       }
 
       .column-btn {
-        background-color: blanchedalmond;
         height: 100%;
         display: flex;
       }
@@ -60,6 +66,15 @@
       .btn {
         height: 100%;
         width: 100%;
+        border-radius: 2px;
+        background-color: rgb(221, 225, 228);
+      }
+
+      .right-btn {
+        border-bottom-right-radius: 5px;
+      }
+      .left-btn {
+        border-bottom-left-radius: 5px;
       }
 
       .btn:hover {
@@ -91,30 +106,30 @@
           <div class="column-btn">
             <button class="btn large">Clear</button>
             <button class="btn">del</button>
-            <button class="btn">/</button>
+            <button class="btn operator">/</button>
           </div>
           <div class="column-btn">
             <button class="btn">7</button>
             <button class="btn">8</button>
             <button class="btn">9</button>
-            <button class="btn">*</button>
+            <button class="btn operator">*</button>
           </div>
           <div class="column-btn">
             <button class="btn">4</button>
             <button class="btn">5</button>
             <button class="btn">6</button>
-            <button class="btn">-</button>
+            <button class="btn operator">-</button>
           </div>
           <div class="column-btn">
             <button class="btn">1</button>
             <button class="btn">2</button>
             <button class="btn">3</button>
-            <button class="btn">+</button>
+            <button class="btn operator">+</button>
           </div>
           <div class="column-btn">
-            <button class="btn">0</button>
+            <button class="btn left-btn">0</button>
             <button class="btn">.</button>
-            <button class="btn large">=</button>
+            <button class="btn large right-btn">=</button>
           </div>
         </div>
       </div>
