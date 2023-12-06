@@ -35,48 +35,55 @@ function operation(operator, a, b) {
   else return "Error";
 }
 
-const equation = document.querySelector(".equation");
-const result = document.querySelector(".result");
-equation.textContent = "";
-result.textContent = "";
+// SUDO CODE FOR ADD EVENT LISTENER FUNCTION
+
+// if number and opertor = 0, add to var1,
+// if NaN and operator =0,add to operator
+// if number and  and operator ~=0, add to var2
+// if Nan and operator != 0, add to second operator
+// {
+// result = pperator (var1,var2,operator1)
+// var1 = result, var2 = "",oerator1 = operator2(if second operator not =)
+// if operatrr2 == "="{
+// result = operation(var1,var2,operation1)
+// var1,vae2,operation1,operation2 ==""
+// }
+// , opeator2 = ""
+// }
+
+const equationDisplay = document.querySelector(".equation");
+const resultDisplay = document.querySelector(".result");
+equationDisplay.textContent = "";
+resultDisplay.textContent = "";
 const allBtn = document.querySelector(".buttons");
 
-let inputEquation = "";
-
-const operatorArray = ["+", "-", "*", "/"];
-// let count = 0;
-let middleOperator = [];
+let var1 = "",
+  var2 = "",
+  operator1 = "",
+  operator2,
+  result = "";
 allBtn.addEventListener("click", (event) => {
-  equation.textContent = event.target.textContent;
-  console.log("equation.textContent", equation.textContent);
-  if (operatorArray.includes(event.target.textContent)) {
-    // count++;
-    middleOperator.push(event.target.textContent);
-    console.log("middleOperator", middleOperator);
-    if (middleOperator.length == 2) {
-      [var1, var2] = [...inputEquation.split(",")];
-      console.log("var1 and var2", var1, var2);
-      const currentResult = operation(middleOperator.shift(), var1, var2);
-      console.log("current result ", currentResult);
-      result.textContent = currentResult;
-      inputEquation = currentResult;
-      console.log("inputEquation", inputEquation);
-    }
-    inputEquation += ",";
-    console.log("inputEquation", inputEquation);
-  } else {
-    inputEquation += event.target.textContent;
-    console.log("inputEquation", inputEquation);
+  const currentEvent = event.target.textContent;
+  if (Number.isInteger(+currentEvent) && !operator1) {
+    var1 += currentEvent;
+    console.log("11111");
+  } else if (Number.isNaN(+currentEvent) && !operator1) {
+    operator1 = currentEvent;
+    console.log("22222");
+  } else if (Number.isInteger(+currentEvent) && operator1) {
+    var2 += currentEvent;
+    console.log("333333");
+  } else if (Number.isNaN(+currentEvent) && operator1) {
+    result = operation(operator1, var1, var2);
+    var1 = result;
+    operator1 = currentEvent;
+    var2 = "";
+    console.log("44444");
   }
+  equationDisplay.textContent = ` ${var1} ${operator1} ${var2}`;
+  resultDisplay.textContent = result;
+  console.log("var1 ", var1);
+  console.log("oper1 ", operator1);
+  console.log("var2 ", var2);
+  console.log("result  ", result);
 });
-
-// console.log(event.target.textContent);
-// if (operatorArray.includes(event.target.textContent)) {
-//   count++
-//   if (count == 2) {
-//     [var1, ope1, var2, ope2] = [...inputEquation.split()];
-//   }
-// } else console.log("not constain");
-// equation.textContent = inputEquation.join("");
-// if(in)
-//   result.textContent = ;
