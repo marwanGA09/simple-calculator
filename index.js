@@ -53,8 +53,8 @@ function operation(operator, a, b) {
 
 const equationDisplay = document.querySelector(".equation");
 const resultDisplay = document.querySelector(".result");
-equationDisplay.textContent = "";
-resultDisplay.textContent = "";
+equationDisplay.textContent = "0";
+resultDisplay.textContent = "0";
 const allBtn = document.querySelector(".buttons");
 
 let var1 = "",
@@ -64,24 +64,35 @@ let var1 = "",
   result = "";
 allBtn.addEventListener("click", (event) => {
   const currentEvent = event.target.textContent;
-  if (Number.isInteger(+currentEvent) && !operator1) {
-    var1 += currentEvent;
-    console.log("11111");
-  } else if (Number.isNaN(+currentEvent) && !operator1) {
-    operator1 = currentEvent;
-    console.log("22222");
-  } else if (Number.isInteger(+currentEvent) && operator1) {
-    var2 += currentEvent;
-    console.log("333333");
-  } else if (Number.isNaN(+currentEvent) && operator1) {
-    result = operation(operator1, var1, var2);
-    var1 = result;
-    operator1 = currentEvent;
-    var2 = "";
-    console.log("44444");
+
+  if (currentEvent == "Clear") {
+    document.location.reload();
+  } else {
+    if (Number.isInteger(+currentEvent) && !operator1) {
+      var1 += currentEvent;
+      console.log("11111");
+    } else if (Number.isNaN(+currentEvent) && !operator1) {
+      operator1 = currentEvent;
+      console.log("22222");
+    } else if (Number.isInteger(+currentEvent) && operator1) {
+      var2 += currentEvent;
+      console.log("333333");
+    } else if (Number.isNaN(+currentEvent) && operator1) {
+      result = operation(operator1, var1, var2);
+      var1 = result;
+      var2 = "";
+      if (currentEvent == "=") {
+        operator1 = "";
+        console.log("44444");
+      } else {
+        operator1 = currentEvent;
+        console.log("55555");
+      }
+    }
+    equationDisplay.textContent = ` ${var1} ${operator1} ${var2}`;
+    resultDisplay.textContent = result;
   }
-  equationDisplay.textContent = ` ${var1} ${operator1} ${var2}`;
-  resultDisplay.textContent = result;
+
   console.log("var1 ", var1);
   console.log("oper1 ", operator1);
   console.log("var2 ", var2);
