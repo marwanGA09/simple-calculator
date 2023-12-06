@@ -67,6 +67,15 @@ allBtn.addEventListener("click", (event) => {
 
   if (currentEvent == "Clear") {
     document.location.reload();
+  } else if (currentEvent == "Del") {
+    if (var2 != "") {
+      var2 = var2.slice(0, -1);
+      console.log("*****", var2);
+    } else {
+      var1 = var1.slice(0, -1);
+      console.log("*****", var1);
+    }
+    equationDisplay.textContent = ` ${var1} ${operator1} ${var2}`;
   } else {
     if (Number.isInteger(+currentEvent) && !operator1) {
       var1 += currentEvent;
