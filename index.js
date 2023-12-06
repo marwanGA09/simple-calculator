@@ -77,16 +77,28 @@ allBtn.addEventListener("click", (event) => {
     }
     equationDisplay.textContent = ` ${var1} ${operator1} ${var2}`;
   } else {
-    if (Number.isInteger(+currentEvent) && !operator1) {
+    if (
+      (Number.isInteger(+currentEvent) || currentEvent == ".") &&
+      !operator1
+    ) {
       var1 += currentEvent;
       console.log("11111");
-    } else if (Number.isNaN(+currentEvent) && !operator1) {
+    } else if (
+      (Number.isNaN(+currentEvent) || currentEvent != ".") &&
+      !operator1
+    ) {
       operator1 = currentEvent;
       console.log("22222");
-    } else if (Number.isInteger(+currentEvent) && operator1) {
+    } else if (
+      (Number.isInteger(+currentEvent) || currentEvent == ".") &&
+      operator1
+    ) {
       var2 += currentEvent;
       console.log("333333");
-    } else if (Number.isNaN(+currentEvent) && operator1) {
+    } else if (
+      (Number.isNaN(+currentEvent) || currentEvent != ".") &&
+      operator1
+    ) {
       result = operation(operator1, var1, var2);
       var1 = result;
       var2 = "";
