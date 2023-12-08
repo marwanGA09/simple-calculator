@@ -76,6 +76,14 @@ equationDisplay.textContent = "0";
 resultDisplay.textContent = "0";
 const allBtn = document.querySelector(".buttons");
 
+function displayResult(var1, var2, operator1) {
+  if (var1 && var2 && operator1) {
+    result = operation(operator1, var1, var2);
+    resultDisplay.textContent = result;
+    console.log("not var1,var2 and operator 1");
+  }
+}
+
 let var1 = "",
   var2 = "",
   operator1 = "",
@@ -95,6 +103,7 @@ allBtn.addEventListener("click", (event) => {
       console.log("*****", var1);
     }
     equationDisplay.textContent = ` ${var1} ${operator1} ${var2}`;
+    displayResult(var1, var2, operator1);
   } else {
     if (
       (Number.isInteger(+currentEvent) || currentEvent == ".") &&
@@ -115,6 +124,7 @@ allBtn.addEventListener("click", (event) => {
       operator1
     ) {
       var2 += currentEvent;
+      displayResult(var1, var2, operator1);
       console.log("333333");
     } else if (
       (Number.isNaN(+currentEvent) || currentEvent != ".") &&
@@ -127,7 +137,7 @@ allBtn.addEventListener("click", (event) => {
       operator1 &&
       var2 != ""
     ) {
-      result = operation(operator1, var1, var2);
+      displayResult(var1, var2, operator1);
       var1 = result;
       var2 = "";
       if (currentEvent == "=") {
@@ -139,7 +149,6 @@ allBtn.addEventListener("click", (event) => {
       }
     }
     equationDisplay.textContent = ` ${var1} ${operator1} ${var2}`;
-    resultDisplay.textContent = result;
   }
 
   console.log("var1 ", var1);
