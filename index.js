@@ -91,10 +91,12 @@ function mainFunction(currentEvent) {
     if (var2 != "") {
       var2 = var2.slice(0, -1);
       // console.log("*****", var2);
-    } else {
+    } else if (var1 != "") {
+      console.log("var!", var1);
       var1 = var1.slice(0, -1);
-      // console.log("*****", var1);
     }
+    // console.log("*****", var1);
+
     equationDisplay.textContent = ` ${var1} ${operator1} ${var2}`;
     displayResult(var1, var2, operator1);
   } else {
@@ -103,22 +105,32 @@ function mainFunction(currentEvent) {
       !operator1 &&
       currentEvent != "="
     ) {
-      var1 += currentEvent;
-      resultDisplay.textContent = var1;
+      if (signs.includes(currentEvent)) {
+        if (!(var1.includes(".") && currentEvent == ".")) {
+          var1 += currentEvent;
+          resultDisplay.textContent = var1;
+        }
+      }
       // console.log("11111");
     } else if (
       (Number.isNaN(+currentEvent) || currentEvent != ".") &&
       !operator1 &&
       currentEvent != "="
     ) {
-      operator1 = currentEvent;
+      if (signs.includes(currentEvent)) {
+        operator1 = currentEvent;
+      }
       // console.log("22222");
     } else if (
       (Number.isInteger(+currentEvent) || currentEvent == ".") &&
       operator1
     ) {
-      var2 += currentEvent;
-      displayResult(var1, var2, operator1);
+      if (signs.includes(currentEvent)) {
+        if (!(var2.includes(".") && currentEvent == ".")) {
+          var2 += currentEvent;
+          displayResult(var1, var2, operator1);
+        }
+      }
       // console.log("333333");
     } else if (
       (Number.isNaN(+currentEvent) || currentEvent != ".") &&
@@ -126,22 +138,28 @@ function mainFunction(currentEvent) {
       var2 == "" &&
       currentEvent != "="
     ) {
-      operator1 = currentEvent;
+      if (signs.includes(currentEvent)) {
+        operator1 = currentEvent;
+      }
     } else if (
       (Number.isNaN(+currentEvent) || currentEvent != ".") &&
       operator1 &&
       var2 != ""
     ) {
-      displayResult(var1, var2, operator1);
-      var1 = result;
-      var2 = "";
-      if (currentEvent == "=") {
-        operator1 = "";
-        // console.log("44444");
-      } else {
-        operator1 = currentEvent;
-        // console.log("55555");
+      if (signs.includes(currentEvent)) {
+        var1 = result;
+        var2 = "";
+
+        if (currentEvent == "=") {
+          operator1 = "";
+          // console.log("44444");
+        } else {
+          operator1 = currentEvent;
+          // console.log("55555");
+        }
       }
+
+      displayResult(var1, var2, operator1);
     }
     equationDisplay.textContent = ` ${var1} ${operator1} ${var2}`;
   }
@@ -150,11 +168,31 @@ function mainFunction(currentEvent) {
 let var1 = "",
   var2 = "",
   operator1 = "",
-  operator2,
-  result = "";
+  result = "",
+  signs = [
+    "-",
+    "=",
+    "+",
+    "*",
+    "/",
+    ".",
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+  ];
+
+console.log(signs.length);
+// signs array used to filter un useful keyboard code value like event
 allBtn.addEventListener("click", (event) => {
   const currentEvent = event.target.textContent;
-
+  console.log(currentEvent);
   mainFunction(currentEvent);
   // console.log("var1 ", var1);
   // console.log("oper1 ", operator1);
@@ -162,55 +200,6 @@ allBtn.addEventListener("click", (event) => {
   // console.log("result  ", result);
   event.stopPropagation();
 });
-
-function keyboardEventChanger(code) {
-  let operationEvent;
-  switch (code) {
-    case "Digit1":
-      operationEvent = "1";
-      break;
-    case "Digit2":
-      operationEvent = "2";
-      break;
-    case "Digit3":
-      operationEvent = "3";
-      break;
-    case "Digit4":
-      operationEvent = "4";
-      break;
-    case "Digit5":
-      operationEvent = "5";
-      break;
-    case "Digit6":
-      operationEvent = "6";
-      break;
-    case "Digit7":
-      operationEvent = "7";
-      break;
-    case "Digit8":
-      operationEvent = "8";
-      break;
-    case "Digit9":
-      operationEvent = "9";
-      break;
-    case "Digit0":
-      operationEvent = "0";
-      break;
-    case "Delete":
-      operationEvent = "Clear";
-      break;
-    case "Backspace":
-      operationEvent = "Del";
-      break;
-    case "Period":
-      operationEvent = ".";
-      break;
-
-    case "Period":
-      operationEvent = ".";
-      break;
-  }
-}
 
 body.addEventListener("keydown", (event) => {
   let currentEvent;
