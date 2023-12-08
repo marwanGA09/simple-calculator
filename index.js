@@ -29,11 +29,30 @@ function operation(operator, a, b) {
       break;
     case "/":
       result = division(a, b);
+      console.log(result);
       break;
   }
-  if (result !== "") return Math.round(result * 10 ** length) / 10 ** length;
-  else return "Error";
+
+  if (!Number.isNaN(result) && result != "") {
+    return Math.round(result * 10 ** length) / 10 ** length;
+  } else {
+    return "Error";
+  }
 }
+
+// console.log("*********************");
+// console.log(operation("=", "3", "3"));
+// console.log(operation("=", "3", "8"));
+// console.log(operation("=", "3", ""));
+// console.log(Boolean(operation("=", "", "")));
+// console.log(operation("=", "3.7", "3.7"));
+// console.log(operation("=", "3.70", "3.7"));
+// console.log(Boolean(0));
+// console.log(Boolean(1));
+// console.log(Boolean("1"));
+// console.log(Boolean("0"));
+// console.log("*********************");
+// console.log(Number.isInteger(3.9));
 
 // SUDO CODE FOR ADD EVENT LISTENER FUNCTION
 
@@ -79,13 +98,15 @@ allBtn.addEventListener("click", (event) => {
   } else {
     if (
       (Number.isInteger(+currentEvent) || currentEvent == ".") &&
-      !operator1
+      !operator1 &&
+      currentEvent != "="
     ) {
       var1 += currentEvent;
       console.log("11111");
     } else if (
       (Number.isNaN(+currentEvent) || currentEvent != ".") &&
-      !operator1
+      !operator1 &&
+      currentEvent != "="
     ) {
       operator1 = currentEvent;
       console.log("22222");
@@ -97,7 +118,14 @@ allBtn.addEventListener("click", (event) => {
       console.log("333333");
     } else if (
       (Number.isNaN(+currentEvent) || currentEvent != ".") &&
-      operator1
+      operator1 &&
+      var2 == ""
+    ) {
+      operator1 = currentEvent;
+    } else if (
+      (Number.isNaN(+currentEvent) || currentEvent != ".") &&
+      operator1 &&
+      var2 != ""
     ) {
       result = operation(operator1, var1, var2);
       var1 = result;
@@ -118,4 +146,5 @@ allBtn.addEventListener("click", (event) => {
   console.log("oper1 ", operator1);
   console.log("var2 ", var2);
   console.log("result  ", result);
+  event.stopPropagation();
 });
