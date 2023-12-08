@@ -18,6 +18,12 @@ function power(a, b) {
   return (+a) ** +b;
 }
 
+function factorial(number) {
+  if (number == 0 || number == 1) {
+    return 1;
+  } else return number * factorial(number - 1);
+}
+
 function operation(operator, a, b) {
   let result = 0;
   // To round number to nearest integer number.
@@ -187,6 +193,14 @@ function mainFunction(currentEvent) {
         var2 = Math.log(+var2).toFixed(4).toString();
       } else if (var1 != "") {
         var1 = Math.log(+var1).toFixed(4).toString();
+      }
+    }
+
+    if (currentEvent == "!") {
+      if (var2 != "") {
+        if (var2 > 0) var2 = factorial(+var2).toString();
+      } else if (var1 != "") {
+        if (var1 > 0) var1 = factorial(+var1).toString();
       }
     }
 
