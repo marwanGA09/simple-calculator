@@ -111,6 +111,7 @@ allBtn.addEventListener("click", (event) => {
       currentEvent != "="
     ) {
       var1 += currentEvent;
+      resultDisplay.textContent = var1;
       console.log("11111");
     } else if (
       (Number.isNaN(+currentEvent) || currentEvent != ".") &&
