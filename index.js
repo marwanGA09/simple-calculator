@@ -16,6 +16,7 @@ function division(a, b) {
 
 function operation(operator, a, b) {
   let result = 0;
+  // To round number to nearest integer number.
   const length = a.length > b.length ? a.length : b.length;
   switch (operator) {
     case "+":
@@ -29,7 +30,6 @@ function operation(operator, a, b) {
       break;
     case "/":
       result = division(a, b);
-      console.log(result);
       break;
   }
 
@@ -39,20 +39,6 @@ function operation(operator, a, b) {
     return "Error";
   }
 }
-
-// console.log("*********************");
-// console.log(operation("=", "3", "3"));
-// console.log(operation("=", "3", "8"));
-// console.log(operation("=", "3", ""));
-// console.log(Boolean(operation("=", "", "")));
-// console.log(operation("=", "3.7", "3.7"));
-// console.log(operation("=", "3.70", "3.7"));
-// console.log(Boolean(0));
-// console.log(Boolean(1));
-// console.log(Boolean("1"));
-// console.log(Boolean("0"));
-// console.log("*********************");
-// console.log(Number.isInteger(3.9));
 
 // SUDO CODE FOR ADD EVENT LISTENER FUNCTION
 
@@ -74,28 +60,31 @@ const body = document.querySelector("body");
 const equationDisplay = document.querySelector(".equation");
 const resultDisplay = document.querySelector(".result");
 equationDisplay.textContent = "0";
-resultDisplay.textContent = "0";
+resultDisplay.textContent = "";
 const allBtn = document.querySelector(".buttons");
 
 function displayResult(var1, var2, operator1) {
   if (var1 && var2 && operator1) {
     result = operation(operator1, var1, var2);
     resultDisplay.textContent = result;
+  } else {
+    resultDisplay.textContent = var1;
   }
 }
 
+// interact user input with programs main goal
 function mainFunction(currentEvent) {
   if (currentEvent == "Clear") {
     document.location.reload();
   } else if (currentEvent == "Del") {
+    // remove one element from the last.
     if (var2 != "") {
       var2 = var2.slice(0, -1);
-      // console.log("*****", var2);
+    } else if (operator1 != "") {
+      operator1 = "";
     } else if (var1 != "") {
-      console.log("var!", var1);
-      var1 = var1.slice(0, -1);
+      var1 = var1.toString().slice(0, -1);
     }
-    // console.log("*****", var1);
 
     equationDisplay.textContent = ` ${var1} ${operator1} ${var2}`;
     displayResult(var1, var2, operator1);
@@ -106,21 +95,20 @@ function mainFunction(currentEvent) {
       currentEvent != "="
     ) {
       if (signs.includes(currentEvent)) {
+        // Not to include double . in single number.
         if (!(var1.includes(".") && currentEvent == ".")) {
           var1 += currentEvent;
-          resultDisplay.textContent = var1;
         }
       }
-      // console.log("11111");
     } else if (
-      (Number.isNaN(+currentEvent) || currentEvent != ".") &&
-      !operator1 &&
-      currentEvent != "="
+      Number.isNaN(+currentEvent) &&
+      currentEvent != "." &&
+      currentEvent != "=" &&
+      !operator1
     ) {
       if (signs.includes(currentEvent)) {
         operator1 = currentEvent;
       }
-      // console.log("22222");
     } else if (
       (Number.isInteger(+currentEvent) || currentEvent == ".") &&
       operator1
@@ -128,40 +116,39 @@ function mainFunction(currentEvent) {
       if (signs.includes(currentEvent)) {
         if (!(var2.includes(".") && currentEvent == ".")) {
           var2 += currentEvent;
-          displayResult(var1, var2, operator1);
         }
       }
-      // console.log("333333");
     } else if (
-      (Number.isNaN(+currentEvent) || currentEvent != ".") &&
+      Number.isNaN(+currentEvent) &&
+      currentEvent != "." &&
       operator1 &&
       var2 == "" &&
       currentEvent != "="
     ) {
+      // change sign of operator two different type of operator enter simultaneously
       if (signs.includes(currentEvent)) {
         operator1 = currentEvent;
       }
     } else if (
-      (Number.isNaN(+currentEvent) || currentEvent != ".") &&
+      Number.isNaN(+currentEvent) &&
+      currentEvent != "." &&
       operator1 &&
       var2 != ""
     ) {
       if (signs.includes(currentEvent)) {
+        result = operation(operator1, var1, var2);
         var1 = result;
         var2 = "";
 
         if (currentEvent == "=") {
           operator1 = "";
-          // console.log("44444");
         } else {
           operator1 = currentEvent;
-          // console.log("55555");
         }
       }
-
-      displayResult(var1, var2, operator1);
     }
     equationDisplay.textContent = ` ${var1} ${operator1} ${var2}`;
+    displayResult(var1, var2, operator1);
   }
 }
 
@@ -169,6 +156,7 @@ let var1 = "",
   var2 = "",
   operator1 = "",
   result = "",
+  // signs array used to filter un useful keyboard code value like event
   signs = [
     "-",
     "=",
@@ -188,19 +176,14 @@ let var1 = "",
     "9",
   ];
 
-console.log(signs.length);
-// signs array used to filter un useful keyboard code value like event
+// Listening for click event
 allBtn.addEventListener("click", (event) => {
   const currentEvent = event.target.textContent;
-  console.log(currentEvent);
   mainFunction(currentEvent);
-  // console.log("var1 ", var1);
-  // console.log("oper1 ", operator1);
-  // console.log("var2 ", var2);
-  // console.log("result  ", result);
   event.stopPropagation();
 });
 
+// Listening for keyboard press
 body.addEventListener("keydown", (event) => {
   let currentEvent;
   if (event.key == "Backspace") {
