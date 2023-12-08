@@ -147,7 +147,19 @@ function mainFunction(currentEvent) {
         }
       }
     }
+    if (currentEvent == "negative") {
+      if (operator1 != "") {
+        if (var2 == "") {
+          var2 = "-";
+        } else {
+          var2 = (+var2 * -1).toString();
+        }
+      } else {
+        var1 = (+var1 * -1).toString();
+      }
+    }
     equationDisplay.textContent = ` ${var1} ${operator1} ${var2}`;
+    console.log(var1, var2, operator1);
     displayResult(var1, var2, operator1);
   }
 }
@@ -178,7 +190,11 @@ let var1 = "",
 
 // Listening for click event
 allBtn.addEventListener("click", (event) => {
-  const currentEvent = event.target.textContent;
+  let currentEvent = event.target.textContent;
+  if (currentEvent == "+/-") {
+    currentEvent = "negative";
+    console.log(currentEvent);
+  }
   mainFunction(currentEvent);
   event.stopPropagation();
 });
