@@ -14,6 +14,10 @@ function division(a, b) {
   return b != 0 ? +a / +b : "";
 }
 
+function power(a, b) {
+  return (+a) ** +b;
+}
+
 function operation(operator, a, b) {
   let result = 0;
   // To round number to nearest integer number.
@@ -30,6 +34,9 @@ function operation(operator, a, b) {
       break;
     case "/":
       result = division(a, b);
+      break;
+    case "^":
+      result = power(a, b);
       break;
   }
 
@@ -158,6 +165,70 @@ function mainFunction(currentEvent) {
         var1 = (+var1 * -1).toString();
       }
     }
+
+    if (currentEvent == "sqrt") {
+      if (var2 != "") {
+        var2 = Math.sqrt(+var2).toFixed(4).toString();
+      } else if (var1 != "") {
+        var1 = Math.sqrt(var1).toFixed(4).toString();
+      }
+    }
+
+    if (currentEvent == "log10") {
+      if (var2 != "") {
+        var2 = Math.log10(+var2).toFixed(4).toString();
+      } else if (var1 != "") {
+        var1 = Math.log10(+var1).toFixed(4).toString();
+      }
+    }
+
+    if (currentEvent == "ln") {
+      if (var2 != "") {
+        var2 = Math.log(+var2).toFixed(4).toString();
+      } else if (var1 != "") {
+        var1 = Math.log(+var1).toFixed(4).toString();
+      }
+    }
+
+    if (
+      currentEvent.slice(0, 3) == "sin" ||
+      currentEvent.slice(0, 3) == "cos" ||
+      currentEvent.slice(0, 3) == "tan"
+    ) {
+      trig = currentEvent.slice(0, 3);
+      if (var2 != "") {
+        if (trig == "sin") {
+          var2 = Math.sin((+var2 * Math.PI) / 180)
+            .toFixed(3)
+            .toString();
+        } else if (trig == "cos") {
+          var2 = Math.cos((+var2 * Math.PI) / 180)
+            .toFixed(3)
+            .toString();
+        } else if (trig == "tan") {
+          var2 = Math.tan((+var2 * Math.PI) / 180)
+            .toFixed(3)
+            .toString();
+        }
+      } else if (var1 != "") {
+        if (var1 != "") {
+          if (trig == "sin") {
+            var1 = Math.sin((+var1 * Math.PI) / 180)
+              .toFixed(3)
+              .toString();
+          } else if (trig == "cos") {
+            var1 = Math.cos((+var1 * Math.PI) / 180)
+              .toFixed(3)
+              .toString();
+          } else if (trig == "tan") {
+            var1 = Math.tan((+var1 * Math.PI) / 180)
+              .toFixed(3)
+              .toString();
+          }
+        }
+      }
+    }
+
     equationDisplay.textContent = ` ${var1} ${operator1} ${var2}`;
     console.log(var1, var2, operator1);
     displayResult(var1, var2, operator1);
@@ -186,6 +257,7 @@ let var1 = "",
     "7",
     "8",
     "9",
+    "^",
   ];
 
 // Listening for click event
